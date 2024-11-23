@@ -23,7 +23,7 @@ const updateSpecificBookIntoDB = async (productId, payload) => {
 }
 
 const deleteSpecificBookFromDB = async (productId) => {
-    const result = await Book.findByIdAndDelete(productId);
+    const result = await Book.findByIdAndDelete(productId,{new: true});
     return result;
 } 
 
