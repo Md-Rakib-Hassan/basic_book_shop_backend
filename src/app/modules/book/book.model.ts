@@ -40,7 +40,7 @@ const bookSchema = new Schema<IBook>({
     type: Boolean, 
     required: [true, 'In stock field is required']  // Custom required message
   }
-});
+},{ timestamps: true });
 
 
 export const Book = model<IBook>('Book', bookSchema);
