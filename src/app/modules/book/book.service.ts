@@ -1,36 +1,48 @@
-import IBook from "./book.interface";
-import { Book } from "./book.model";
+import IBook from './book.interface';
+import { Book } from './book.model';
 
-const createBookIntoDB = async (bookData: IBook) => {
+// Service to create a book in the database
+const createBookIntoDB = async (bookData: IBook): Promise<IBook> => {
+
     const result = await Book.create(bookData);
     return result;
-}
 
-const getAllBooksFromDB = async (query) => {
+};
+
+// Service to fetch all books with optional query parameters
+const getAllBooksFromDB = async (query: Record<string, any>): Promise<IBook[]> => {
+
     const result = await Book.find(query);
     return result;
-}
 
-const getSpecificBookFromDB = async (productId) => {
-    const result = await Book.findById(productId);
+};
+
+// Service to fetch a specific book by ID
+const getSpecificBookFromDB = async (bookId: string): Promise<IBook | null> => {
+
+    const result = await Book.findById(bookId);
     return result;
-}
 
-const updateSpecificBookIntoDB = async (productId, payload) => {
-    const filter={_id: productId}
+};
+
+// Service to update a specific book by ID
+const updateSpecificBookIntoDB = async (bookId: string,payload: Partial<IBook>): Promise<IBook | null> => {
+    const filter = { _id: bookId };
     const result = await Book.findOneAndUpdate(filter, payload, { new: true });
     return result;
-}
+};
 
-const deleteSpecificBookFromDB = async (productId) => {
-    const result = await Book.findByIdAndDelete(productId,{new: true});
+// Service to delete a specific book by ID
+const deleteSpecificBookFromDB = async (bookId: string): Promise<IBook | null> => {
+    const result = await Book.findByIdAndDelete(bookId);
     return result;
-} 
+};
 
-export const  BookServices = {
-    createBookIntoDB,
-    getAllBooksFromDB,
-    getSpecificBookFromDB,
-    updateSpecificBookIntoDB,
-    deleteSpecificBookFromDB
-}
+// Exporting all book services
+export const BookServices = {
+  createBookIntoDB,
+  getAllBooksFromDB,
+  getSpecificBookFromDB,
+  updateSpecificBookIntoDB,
+  deleteSpecificBookFromDB,
+};

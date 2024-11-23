@@ -3,7 +3,7 @@ import app from './app';
 import config from './app/config';
 
 async function main() {
-  await mongoose.connect(config.database_uri as string)
+  await mongoose.connect(config.database_uri as string);
 }
 main();
 
