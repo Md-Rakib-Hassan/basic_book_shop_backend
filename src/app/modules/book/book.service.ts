@@ -22,9 +22,15 @@ const updateSpecificBookIntoDB = async (productId, payload) => {
     return result;
 }
 
+const deleteSpecificBookFromDB = async (productId) => {
+    const result = await Book.findByIdAndDelete(productId);
+    return result;
+} 
+
 export const  BookServices = {
     createBookIntoDB,
     getAllBooksFromDB,
     getSpecificBookFromDB,
-    updateSpecificBookIntoDB
+    updateSpecificBookIntoDB,
+    deleteSpecificBookFromDB
 }
