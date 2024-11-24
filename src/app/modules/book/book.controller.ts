@@ -56,12 +56,15 @@ const getSpecificBook = async (req: Request, res: Response) => {
         success: false, // Indicates operation was not successful
       });
     }
+    else {
+      res.status(200).json({
+        message: 'Book retrieved successfully', // Success message
+        success: true, // Indicates operation was successful
+        data: result, // Return the book data
+      });
+    }
 
-    res.status(200).json({
-      message: 'Book retrieved successfully', // Success message
-      success: true, // Indicates operation was successful
-      data: result, // Return the book data
-    });
+    
   } catch (err: any) {
     handleError(res, err, 'Failed to retrieve book'); // Handle errors
   }
@@ -81,12 +84,15 @@ const updateSpecificBook = async (req: Request, res: Response) => {
         success: false, // Indicates operation was not successful
       });
     }
+    else {
+      res.status(200).json({
+        message: 'Book updated successfully', // Success message
+        success: true, // Indicates operation was successful
+        data: result, // Return the updated book data
+      });
+    }
 
-    res.status(200).json({
-      message: 'Book updated successfully', // Success message
-      success: true, // Indicates operation was successful
-      data: result, // Return the updated book data
-    });
+    
   } catch (err: any) {
     handleError(res, err, 'Failed to update book'); // Handle errors
   }
@@ -105,12 +111,16 @@ const deleteSpecificBook = async (req: Request, res: Response) => {
         success: false, // Indicates operation was not successful
       });
     }
+    else {
+      res.status(200).json({
+        message: 'Book deleted successfully', // Success message
+        success: true, // Indicates operation was successful
+        data: {}, // Return an empty object
+      });
+      
+    }
 
-    res.status(200).json({
-      message: 'Book deleted successfully', // Success message
-      success: true, // Indicates operation was successful
-      data: {}, // Return an empty object
-    });
+    
   } catch (err: any) {
     handleError(res, err, 'Failed to delete book'); // Handle errors
   }
