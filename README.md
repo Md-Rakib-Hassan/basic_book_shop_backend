@@ -27,17 +27,20 @@ Develop a fully functional Express application using TypeScript with MongoDB (vi
 ### Steps to Set Up Locally
 
 1. **Clone the Repository**
+
    ```bash
    git clone https://github.com/Md-Rakib-Hassan/basic_book_shop_backend.git
    cd basic_book_shop_backend
    ```
 
 2. **Install Dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set Up Environment Variables**
+
    - Create a `.env` file or rename the `.env.example` as `.env` in the project root and configure it with the following:
      ```
      PORT=5000
@@ -45,11 +48,13 @@ Develop a fully functional Express application using TypeScript with MongoDB (vi
      ```
 
 4. **Compile TypeScript**
+
    ```bash
    npm run build
    ```
 
 5. **Start the Server**
+
    ```bash
    npm run start:dev
    ```
@@ -65,6 +70,7 @@ Develop a fully functional Express application using TypeScript with MongoDB (vi
 
 - **Endpoint**: `POST /api/products`
 - **Request Body**:
+
   ```json
   {
     "title": "The Great Gatsby",
@@ -92,6 +98,7 @@ Develop a fully functional Express application using TypeScript with MongoDB (vi
 
 - **Endpoint**: `GET /api/products`
 - **Query Parameters**:
+
   - `searchTerm`: Search by `title`, `author`, or `category`.
 
 - **Response**:
@@ -124,6 +131,7 @@ Develop a fully functional Express application using TypeScript with MongoDB (vi
 
 - **Endpoint**: `PUT /api/products/:productId`
 - **Request Body**:
+
   ```json
   {
     "price": 15,
@@ -161,6 +169,7 @@ Develop a fully functional Express application using TypeScript with MongoDB (vi
 
 - **Endpoint**: `POST /api/orders`
 - **Request Body**:
+
   ```json
   {
     "email": "customer@example.com",
@@ -201,6 +210,7 @@ Develop a fully functional Express application using TypeScript with MongoDB (vi
 ## Error Handling
 
 All errors return a consistent response format:
+
 ```json
 {
   "message": "Error description",
@@ -211,8 +221,6 @@ All errors return a consistent response format:
 ```
 
 ---
-
-
 
 ## Testing the API
 

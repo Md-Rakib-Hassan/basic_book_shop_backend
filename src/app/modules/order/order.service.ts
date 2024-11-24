@@ -14,7 +14,7 @@ const createBookOrderIntoDB = async (orderedDetails: IOrder) => {
 
   // Check if there is sufficient stock available; throw an error if not
   if (orderedBook.quantity < orderedDetails.quantity) {
-    throw new CustomError(500, "Don't have the enough quantity");
+    throw new CustomError(500, 'Insufficient stock');
   }
 
   // Update the book's quantity in the database
@@ -44,7 +44,7 @@ const createRevenueFromOrdersDB = async () => {
     {
       $group: {
         _id: null, // Group all documents together
-        totalRevenue: { $sum: {$multiply:['$totalPrice','$quantity']} }, // Calculate the total revenue
+        totalRevenue: { $sum: { $multiply: ['$totalPrice', '$quantity'] } }, // Calculate the total revenue
       },
     },
     { $project: { _id: 0 } }, // Exclude the _id field in the result

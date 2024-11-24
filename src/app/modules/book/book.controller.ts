@@ -5,7 +5,7 @@ import { BookServices } from './book.service';
 const handleError = (res: Response, err: any, defaultMessage: string) => {
   res.status(500).json({
     message: err._message || defaultMessage,
-    success: false,
+    status: false,
     error: err,
     stack: err.stack, // Detailed error info for debugging
   });
@@ -35,7 +35,7 @@ const getAllBooks = async (req: Request, res: Response) => {
     const result = await BookServices.getAllBooksFromDB(searchTerm as string); // Fetch books from the database
     res.status(200).json({
       message: 'Books retrieved successfully', // Success message
-      success: true, // Indicates operation was successful
+      status: true, // Indicates operation was successful
       data: result, // Return the list of books
     });
   } catch (err: any) {
@@ -53,18 +53,15 @@ const getSpecificBook = async (req: Request, res: Response) => {
       // If no book is found, return a 404 response
       res.status(404).json({
         message: 'Book not found', // Error message
-        success: false, // Indicates operation was not successful
+        status: false, // Indicates operation was not successful
       });
-    }
-    else {
+    } else {
       res.status(200).json({
         message: 'Book retrieved successfully', // Success message
-        success: true, // Indicates operation was successful
+        status: true, // Indicates operation was successful
         data: result, // Return the book data
       });
     }
-
-    
   } catch (err: any) {
     handleError(res, err, 'Failed to retrieve book'); // Handle errors
   }
@@ -81,18 +78,15 @@ const updateSpecificBook = async (req: Request, res: Response) => {
       // If no book is found, return a 404 response
       res.status(404).json({
         message: 'Book not found', // Error message
-        success: false, // Indicates operation was not successful
+        status: false, // Indicates operation was not successful
       });
-    }
-    else {
+    } else {
       res.status(200).json({
         message: 'Book updated successfully', // Success message
-        success: true, // Indicates operation was successful
+        status: true, // Indicates operation was successful
         data: result, // Return the updated book data
       });
     }
-
-    
   } catch (err: any) {
     handleError(res, err, 'Failed to update book'); // Handle errors
   }
@@ -108,19 +102,15 @@ const deleteSpecificBook = async (req: Request, res: Response) => {
       // If no book is found, return a 404 response
       res.status(404).json({
         message: 'Book not found', // Error message
-        success: false, // Indicates operation was not successful
+        status: false, // Indicates operation was not successful
       });
-    }
-    else {
+    } else {
       res.status(200).json({
         message: 'Book deleted successfully', // Success message
-        success: true, // Indicates operation was successful
+        status: true, // Indicates operation was successful
         data: {}, // Return an empty object
       });
-      
     }
-
-    
   } catch (err: any) {
     handleError(res, err, 'Failed to delete book'); // Handle errors
   }
