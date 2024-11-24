@@ -44,7 +44,7 @@ const createRevenueFromOrdersDB = async () => {
     {
       $group: {
         _id: null, // Group all documents together
-        totalRevenue: { $sum: '$totalPrice' }, // Calculate the total revenue
+        totalRevenue: { $sum: {$multiply:['$totalPrice','$quantity']} }, // Calculate the total revenue
       },
     },
     { $project: { _id: 0 } }, // Exclude the _id field in the result
