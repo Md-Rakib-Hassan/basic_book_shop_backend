@@ -31,7 +31,6 @@ const createBook = async (req: Request, res: Response) => {
 const getAllBooks = async (req: Request, res: Response) => {
   try {
     const { searchTerm } = req.query; // Get query parameters for filtering
-    console.log(searchTerm);
     const result = await BookServices.getAllBooksFromDB(searchTerm as string); // Fetch books from the database
     res.status(200).json({
       message: 'Books retrieved successfully', // Success message
