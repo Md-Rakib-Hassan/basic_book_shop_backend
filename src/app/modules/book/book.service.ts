@@ -10,11 +10,19 @@ const createBookIntoDB = async (bookData: IBook): Promise<IBook> => {
 };
 
 // Service to fetch all books with optional query parameters
-const getAllBooksFromDB = async (query: Record<string, any>): Promise<IBook[]> => {
+const getAllBooksFromDB = async (searchTerm?: string) => {
+  const query = searchTerm
+    ? {
+        $or: [
+          { title: searchTerm },
+          { author: searchTerm },
+          { category: searchTerm },
+        ],
+      }
+    : {};
 
-    const result = await Book.find(query);
-    return result;
-
+  const result = await Book.find(query);
+  return result;
 };
 
 // Service to fetch a specific book by ID
