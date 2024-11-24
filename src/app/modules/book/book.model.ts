@@ -45,7 +45,7 @@ const bookSchema = new Schema<IBook>(
     },
     inStock: {
       type: Boolean,
-      default:true, 
+      default: true,
       required: [true, 'In stock field is required'], // Custom required message
     },
   },

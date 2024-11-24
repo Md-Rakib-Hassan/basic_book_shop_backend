@@ -51,7 +51,7 @@ const getSpecificBook = async (req: Request, res: Response) => {
 
     if (!result) {
       // If no book is found, return a 404 response
-      return res.status(404).json({
+      res.status(404).json({
         message: 'Book not found', // Error message
         success: false, // Indicates operation was not successful
       });
@@ -76,7 +76,7 @@ const updateSpecificBook = async (req: Request, res: Response) => {
 
     if (!result) {
       // If no book is found, return a 404 response
-      return res.status(404).json({
+      res.status(404).json({
         message: 'Book not found', // Error message
         success: false, // Indicates operation was not successful
       });
@@ -100,7 +100,7 @@ const deleteSpecificBook = async (req: Request, res: Response) => {
 
     if (!result) {
       // If no book is found, return a 404 response
-      return res.status(404).json({
+      res.status(404).json({
         message: 'Book not found', // Error message
         success: false, // Indicates operation was not successful
       });

@@ -1,11 +1,13 @@
-import { BookServices } from "../book/book.service";
-import IOrder from "./order.interface";
-import { Order } from "./order.model";
+import { BookServices } from '../book/book.service';
+import IOrder from './order.interface';
+import { Order } from './order.model';
 
 // Function to create a book order in the database
 const createBookOrderIntoDB = async (orderedDetails: IOrder) => {
   // Fetch the book details from the database
-  const orderedBook = await BookServices.getSpecificBookFromDB(orderedDetails.product);
+  const orderedBook = await BookServices.getSpecificBookFromDB(
+    orderedDetails.product,
+  );
 
   // Throw an error if the book is not found
   if (!orderedBook) throw new NotFoundError();
@@ -16,13 +18,18 @@ const createBookOrderIntoDB = async (orderedDetails: IOrder) => {
   }
 
   // Update the book's quantity in the database
-  const bookUpdate = await BookServices.updateSpecificBookIntoDB(orderedDetails.product, {
-    quantity: orderedBook.quantity - orderedDetails.quantity,
-  });
+  const bookUpdate = await BookServices.updateSpecificBookIntoDB(
+    orderedDetails.product,
+    {
+      quantity: orderedBook.quantity - orderedDetails.quantity,
+    },
+  );
 
   // If the book's quantity becomes zero, mark it as out of stock
   if (bookUpdate?.quantity == 0) {
-    await BookServices.updateSpecificBookIntoDB(orderedDetails.product, { inStock: false });
+    await BookServices.updateSpecificBookIntoDB(orderedDetails.product, {
+      inStock: false,
+    });
   }
 
   // Create the order in the database
@@ -37,12 +44,12 @@ const createRevenueFromOrdersDB = async () => {
     {
       $group: {
         _id: null, // Group all documents together
-        totalRevenue: { $sum: "$totalPrice" }, // Calculate the total revenue
+        totalRevenue: { $sum: '$totalPrice' }, // Calculate the total revenue
       },
     },
     { $project: { _id: 0 } }, // Exclude the _id field in the result
   ]);
-  return result[0]||{totalRevenue:0}; // Return the first result containing the total revenue
+  return result[0] || { totalRevenue: 0 }; // Return the first result containing the total revenue
 };
 
 export const OrderServices = {
@@ -55,8 +62,8 @@ class NotFoundError extends Error {
   statusCode: number;
   constructor() {
     super();
-    this.name = "Not Found Error";
-    this.message = "Book not found"; // Default message for Not Found errors
+    this.name = 'Not Found Error';
+    this.message = 'Book not found'; // Default message for Not Found errors
     this.statusCode = 404; // HTTP status code for Not Found
   }
 }
