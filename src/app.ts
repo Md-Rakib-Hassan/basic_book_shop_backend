@@ -1,12 +1,13 @@
 import express, { Request, Response } from 'express';
-import { BookRoutes } from './app/modules/book/book.route';
-import { orderRoute } from './app/modules/order/order.route';
+import router from './app/routes';
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
+import notFound from './app/middlewares/notFound';
 
 const app = express();
 app.use(express.json());
 
-app.use('/api/products', BookRoutes);
-app.use('/api/orders', orderRoute);
+
+app.use('/api', router);
 
 app.get('/', (req: Request, res: Response) => {
   res.send({
@@ -14,5 +15,8 @@ app.get('/', (req: Request, res: Response) => {
     message: 'Server is running',
   });
 });
+
+app.use(globalErrorHandler);
+app.use(notFound);
 
 export default app;
