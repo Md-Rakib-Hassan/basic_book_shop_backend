@@ -3,22 +3,22 @@ import IBook from './book.interface';
 
 const bookSchema = new Schema<IBook>(
   {
-    title: {
+    Title: {
       type: String,
       required: [true, 'Title is required'], // Custom required message
       trim: true, // Trims extra spaces
     },
-    author: {
-      type: String,
+    Author: {
+      type: Schema.Types.ObjectId,
+      ref: 'Author',
       required: [true, 'Author is required'], // Custom required message
-      trim: true,
     },
-    price: {
+    Price: {
       type: Number,
       required: [true, 'Price is required'], // Custom required message
       min: [0, 'Price must be a positive number'], // Custom min value message
     },
-    category: {
+    Category: {
       type: String,
       enum: {
         values: [
@@ -33,20 +33,29 @@ const bookSchema = new Schema<IBook>(
       required: [true, 'Category is required'], // Custom required message
       trim: true,
     },
-    description: {
+    Description: {
       type: String,
       required: [true, 'Description is required'], // Custom required message
       minlength: [10, 'Description must be at least 10 characters long'], // Minimum length validation
     },
-    quantity: {
+    StockQuantity: {
       type: Number,
       required: [true, 'Quantity is required'], // Custom required message
       min: [1, 'Quantity must be at least 1'], // Custom min value message
     },
-    inStock: {
-      type: Boolean,
-      default: true,
-      required: [true, 'In stock field is required'], // Custom required message
+    ISBN: {
+      type: String,
+      required: [true, 'ISBN is required'], // Custom required message
+      trim: true,
+    },
+    
+      PublishedYear: {
+        type: Number,
+        required: [true, 'PublishedYear is required'], // Custom required message
+    },
+    ImageUrl: {
+      type: String,
+      required: [true, 'Image URL is required'], // Custom required message
     },
   },
   { timestamps: true },

@@ -2,8 +2,8 @@ import IBook from './book.interface';
 import { Book } from './book.model';
 
 // Service to create a book in the database
-const createBookIntoDB = async (bookData: IBook): Promise<IBook> => {
-  const result = await Book.create(bookData);
+const createBookInDB = async (bookData: IBook): Promise<IBook> => {
+  const result = (await Book.create(bookData)).populate('Author');
   return result;
 };
 
@@ -12,30 +12,31 @@ const getAllBooksFromDB = async (searchTerm?: string) => {
   const query = searchTerm
     ? {
         $or: [
-          { title: searchTerm },
-          { author: searchTerm },
-          { category: searchTerm },
+          { Title: searchTerm },
+          { Author: searchTerm },
+          { Category: searchTerm },
+          { ISBN: searchTerm },
         ],
       }
     : {};
 
-  const result = await Book.find(query);
+  const result = await Book.find(query).populate('Author');
   return result;
 };
 
 // Service to fetch a specific book by ID
 const getSpecificBookFromDB = async (bookId: string): Promise<IBook | null> => {
-  const result = await Book.findById(bookId);
+  const result = await Book.findById(bookId).populate('Author');
   return result;
 };
 
 // Service to update a specific book by ID
-const updateSpecificBookIntoDB = async (
+const updateSpecificBookInDB = async (
   bookId: string,
   payload: Partial<IBook>,
 ): Promise<IBook | null> => {
   const filter = { _id: bookId };
-  const result = await Book.findOneAndUpdate(filter, payload, { new: true });
+  const result = await Book.findOneAndUpdate(filter, payload, { new: true }).populate('Author');
   return result;
 };
 
@@ -49,9 +50,9 @@ const deleteSpecificBookFromDB = async (
 
 // Exporting all book services
 export const BookServices = {
-  createBookIntoDB,
+  createBookInDB,
   getAllBooksFromDB,
   getSpecificBookFromDB,
-  updateSpecificBookIntoDB,
+  updateSpecificBookInDB,
   deleteSpecificBookFromDB,
 };

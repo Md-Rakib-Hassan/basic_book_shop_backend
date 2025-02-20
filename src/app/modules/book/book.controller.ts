@@ -1,28 +1,33 @@
 import { Request, Response } from 'express';
 import { BookServices } from './book.service';
 import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import AppError from '../../errors/AppError';
 
 // Creates a new book and stores it in the database
 const createBook = catchAsync(async (req: Request, res: Response) => {
   const bookData = req.body; // Get book data from the request body
-  const result = await BookServices.createBookIntoDB(bookData); // Save the book to the database
+  const result = await BookServices.createBookInDB(bookData); // Save the book to the database
 
-  res.status(201).json({
-    message: 'Book created successfully', // Success message
-    success: true, // Indicates operation was successful
-    data: result, // Return the created book data
-  });
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: 'Book created successfully',
+    data: result,
+  })
 });
 
 // Retrieves all books, optionally filtered by query parameters
 const getAllBooks = catchAsync(async (req: Request, res: Response) => {
   const { searchTerm } = req.query; // Get query parameters for filtering
   const result = await BookServices.getAllBooksFromDB(searchTerm as string); // Fetch books from the database
-  res.status(200).json({
-    message: 'Books retrieved successfully', // Success message
-    status: true, // Indicates operation was successful
-    data: result, // Return the list of books
-  });
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Books retrieved successfully',
+    data: result,
+  })
 });
 
 // Retrieves a single book by its ID
@@ -32,16 +37,15 @@ const getSpecificBook = catchAsync(async (req: Request, res: Response) => {
 
   if (!result) {
     // If no book is found, return a 404 response
-    res.status(404).json({
-      message: 'Book not found', // Error message
-      status: false, // Indicates operation was not successful
-    });
+    throw new AppError(404, 'Book not found');
+    
   } else {
-    res.status(200).json({
-      message: 'Book retrieved successfully', // Success message
-      status: true, // Indicates operation was successful
-      data: result, // Return the book data
-    });
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Book retrieved successfully',
+      data: result,
+    })
   }
 });
 
@@ -49,20 +53,20 @@ const getSpecificBook = catchAsync(async (req: Request, res: Response) => {
 const updateSpecificBook = catchAsync(async (req: Request, res: Response) => {
   const bookId = req.params.bookId; // Get the book ID from the URL
   const payload = req.body; // Get the updated data from the request body
-  const result = await BookServices.updateSpecificBookIntoDB(bookId, payload); // Update the book in the database
+  const result = await BookServices.updateSpecificBookInDB(bookId, payload); // Update the book in the database
 
   if (!result) {
     // If no book is found, return a 404 response
-    res.status(404).json({
-      message: 'Book not found', // Error message
-      status: false, // Indicates operation was not successful
-    });
+    throw new AppError(404, "Book not found");
+    
   } else {
-    res.status(200).json({
-      message: 'Book updated successfully', // Success message
-      status: true, // Indicates operation was successful
-      data: result, // Return the updated book data
-    });
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Book updated successfully',
+      data: result,
+    })
+
   }
 });
 
@@ -73,16 +77,16 @@ const deleteSpecificBook = catchAsync(async (req: Request, res: Response) => {
 
   if (!result) {
     // If no book is found, return a 404 response
-    res.status(404).json({
-      message: 'Book not found', // Error message
-      status: false, // Indicates operation was not successful
-    });
+    throw new AppError(404, 'Book not found');
+    
   } else {
-    res.status(200).json({
-      message: 'Book deleted successfully', // Success message
-      status: true, // Indicates operation was successful
-      data: {}, // Return an empty object
-    });
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Book deleted successfully',
+      data: {},
+    })
+    
   }
 });
 

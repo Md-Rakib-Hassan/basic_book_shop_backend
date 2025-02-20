@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { ObjectId } from "mongoose";
+import { ObjectId, Types } from "mongoose";
 
 export enum Category {
   Fiction = 'Fiction',
@@ -9,19 +9,24 @@ export enum Category {
   Religious = 'Religious',
 }
 
-export interface IBookReview{
-  user: ObjectId;
-  rating: number;
-  details?: string;
-}
+
 
 export default interface IBook {
-  title: string;
-  author: string;
-  price: number;
-  category: Category;
-  description: string;
-  reviews: IBookReview;
-  quantity: number;
-  inStock: boolean;
+  Author: Types.ObjectId;
+  Title: string;
+  ISBN: string;
+  Category: Category;
+  Price: number;
+  StockQuantity: number;
+  PublishedYear: number;
+  Description: string;
+  ImageUrl: string;
+
+}
+
+
+export interface IBookReview{
+  User: ObjectId;
+  Rating: number;
+  Details?: string;
 }

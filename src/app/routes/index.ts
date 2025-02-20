@@ -2,6 +2,8 @@ import { Router } from "express";
 import { AuthRoutes } from "../modules/auth/auth.route";
 import { BookRoutes } from "../modules/book/book.route";
 import { orderRoute } from "../modules/order/order.route";
+import { UserRoutes } from "../modules/user/user.route";
+import { AuthorRoutes } from "../modules/author/author.route";
 
 
 const router = Router();
@@ -12,13 +14,21 @@ const moduleRoutes = [
         route:AuthRoutes,
     },
     {
-        path: '/books',
+        path: '/auth',
+        route:UserRoutes,
+    },
+    {
+        path: '/book',
         route:BookRoutes,
     },
     {
         path: '/orders',
         route:orderRoute,
     },
+    {
+        path: '/author',
+        route:AuthorRoutes,
+    }
     
 ]
 
