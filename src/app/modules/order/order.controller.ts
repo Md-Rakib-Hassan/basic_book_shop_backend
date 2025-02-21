@@ -58,7 +58,7 @@ const updateSpecificOrder = catchAsync(async (req: Request, res: Response) => {
 })
 
 const cancelSpecificOrder = catchAsync(async (req: Request, res: Response) => { 
-  const orderId = req.params.orderId;
+  const orderId:string = req.params.orderId;
   const userId = req.user;
     const result = await OrderServices.cancelSpecificOrderInDB(orderId,userId);
     if (!result) {
