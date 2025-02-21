@@ -1,6 +1,17 @@
+import { Types } from "mongoose";
+
+export interface IBookDetails {
+  BookId: Types.ObjectId;
+  Quantity: number;
+ }
+
 export default interface IOrder {
-  email: string;
-  product: string;
-  quantity: number;
-  totalPrice: number;
+  UserId: Types.ObjectId;
+  BookDetails: IBookDetails[];
+  OrderDate?: Date;
+  PaymentStatus?: string;
+  PaymentMethod: string;
+  OrderStatus?: string;
+  SubTotal: number;
+  Total: number;
 }

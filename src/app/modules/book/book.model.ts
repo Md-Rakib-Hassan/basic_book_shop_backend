@@ -47,6 +47,7 @@ const bookSchema = new Schema<IBook>(
       type: String,
       required: [true, 'ISBN is required'], // Custom required message
       trim: true,
+      unique: true,
     },
     
       PublishedYear: {

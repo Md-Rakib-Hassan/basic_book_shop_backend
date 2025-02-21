@@ -3,13 +3,15 @@ import { IUser } from './user.interface';
 
 const userSchema = new Schema<IUser>(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: {
+    Name: { type: String, required: true },
+    Email: { type: String, required: true, unique: true },
+    Password: { type: String, required: true },
+    UserType: {
       type: String,
       default: 'user',
     },
+    Address: { type: String,required: true },
+    Phone: { type: String, required: true,unique: true},
     isBlocked: { type: Boolean, default: false },
   },
   {

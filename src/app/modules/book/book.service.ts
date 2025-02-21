@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ObjectId } from 'mongoose';
 import IBook from './book.interface';
 import { Book } from './book.model';
+import AppError from '../../errors/AppError';
 
 // Service to create a book in the database
 const createBookInDB = async (bookData: IBook): Promise<IBook> => {
@@ -25,7 +28,7 @@ const getAllBooksFromDB = async (searchTerm?: string) => {
 };
 
 // Service to fetch a specific book by ID
-const getSpecificBookFromDB = async (bookId: string): Promise<IBook | null> => {
+const getSpecificBookFromDB = async (bookId: ObjectId): Promise<IBook | null> => {
   const result = await Book.findById(bookId).populate('Author');
   return result;
 };
@@ -37,6 +40,24 @@ const updateSpecificBookInDB = async (
 ): Promise<IBook | null> => {
   const filter = { _id: bookId };
   const result = await Book.findOneAndUpdate(filter, payload, { new: true }).populate('Author');
+  return result;
+};
+
+const updateBookQuantityInDB = async (
+  bookId: ObjectId,
+  qty: number,
+  session?: any,
+): Promise<IBook | null> => {
+  const book = await getSpecificBookFromDB(bookId);
+  if (!book) {
+    throw new AppError(404, 'Book not found');
+  }
+  const previousQty = book.StockQuantity;
+  if(previousQty < qty){
+    throw new AppError(400, 'Not enough stock');
+  }
+  const newQty = previousQty - qty;
+  const result = await Book.findByIdAndUpdate(bookId, { StockQuantity: newQty }, { new: true, session });
   return result;
 };
 
@@ -54,5 +75,6 @@ export const BookServices = {
   getAllBooksFromDB,
   getSpecificBookFromDB,
   updateSpecificBookInDB,
+  updateBookQuantityInDB,
   deleteSpecificBookFromDB,
 };

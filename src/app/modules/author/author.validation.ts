@@ -5,7 +5,7 @@ const CreateAuthorValidationSchema = z.object({
     Email: z.string({required_error: 'Email is required'}).email({ message: 'Invalid email address'}),
     Phone: z.string({ required_error: 'Phone is required' }),
     BioGraphy: z.string({ required_error: 'Biography is required' }),
-    DateOfBirth: z.date({ required_error: 'Date of Birth is required' }),
+    DateOfBirth: z.string({ required_error: 'Date of Birth is required' }),
     Nationality: z.string({ required_error: 'Nationality is required' }),
     Website: z.string().optional(),
     ImageUrl: z.string({ required_error: 'Image URL is required' })
@@ -16,7 +16,7 @@ const UpdateAuthorValidationSchema = z.object({
     Email: z.string({required_error: 'Email is required'}).email({ message: 'Invalid email address'}).optional(),
     Phone: z.string({ required_error: 'Phone is required' }).optional(),
     BioGraphy: z.string({ required_error: 'Biography is required' }).optional(),
-    DateOfBirth: z.date({ required_error: 'Date of Birth is required' }).optional(),
+    DateOfBirth: z.string({ required_error: 'Date of Birth is required' }).optional(),
     Nationality: z.string({ required_error: 'Nationality is required' }).optional(),
     Website: z.string().optional(),
     ImageUrl: z.string({ required_error: 'Image URL is required' }).optional()

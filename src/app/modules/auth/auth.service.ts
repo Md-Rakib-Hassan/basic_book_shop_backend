@@ -5,19 +5,19 @@ import { ILoginUser } from "./auth.interface";
 import { createToken } from "./auth.utils";
 
 const loginUser = async (payload:ILoginUser) => { 
-    const user = await UserService.getSingleUserFromDB(payload.email);
+    const user = await UserService.getSingleUserFromDB(payload.Email);
     if(!user){
         throw new AppError(404,'User not found');
     }
     if (user.isBlocked) {
         throw new AppError(401, 'User is blocked');
     }
-    if (user.password !== payload.password) {
+    if (user.Password !== payload.Password) {
         throw new AppError(401, 'Invalid credentials');
     }
     const jwtPayload = {
-        email: user.email,
-        role: user.role,    
+        Email: user.Email,
+        Role: user.UserType,    
     }
 
     const accessToken = createToken(

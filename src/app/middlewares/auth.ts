@@ -5,7 +5,7 @@ import config from "../config";
 import { UserService } from "../modules/user/user.service";
 import { TUserRole } from "../modules/user/user.interface";
 
-const auth = (...roles:TUserRole[]) => {
+const auth = (...Roles:TUserRole[]) => {
     return catchAsync(async(req, res, next) => {
         const token = (req.headers.authorization)?.replace('Bearer ', '');
         if (!token) {
@@ -13,16 +13,16 @@ const auth = (...roles:TUserRole[]) => {
         }
         const decoded = jwt.verify(token, config.jwt_secret as string)as JwtPayload;
 
-        const { role, email } = decoded;
+        const { Role, Email } = decoded;
 
-        const user = await UserService.getSingleUserFromDB(email);
+        const user = await UserService.getSingleUserFromDB(Email);
         if (!user) {
             throw new AppError(404,'User not found');
         }
         if(user?.isBlocked){
             throw new AppError(401, 'User is blocked');
         }
-        if (roles && !roles.includes(role)) {
+        if (Roles && !Roles.includes(Role)) {
             throw new AppError(401,'You are not authorized');
         }
         decoded._id=user._id;

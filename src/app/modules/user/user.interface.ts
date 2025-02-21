@@ -1,10 +1,12 @@
 import { USER_ROLE } from "./user.constants"
 
 export interface IUser{
-name: string,
-email:string,
-password:string,
-role: 'admin'|'user',    
+Name: string,
+Email:string,
+Password: string,
+Address: string,
+Phone: string,
+UserType: 'admin'|'user',    
 isBlocked:boolean,
 }       
 

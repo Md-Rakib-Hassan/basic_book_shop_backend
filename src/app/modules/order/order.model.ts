@@ -1,32 +1,64 @@
 import { model, Schema } from 'mongoose';
-import IOrder from './order.interface';
-import { isEmail } from 'validator';
+import IOrder, { IBookDetails } from './order.interface';
+
+const BookDetailsSchema = new Schema<IBookDetails>(
+  {
+    BookId: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'BookId is required'],
+      ref: 'Book',
+    },
+    Quantity: {
+      type: Number,
+      required: [true, 'Quantity is required'],
+      min: 1,
+    },
+  },
+  { _id: false }
+);
 
 const OrderSchema = new Schema<IOrder>(
   {
-    email: {
+    UserId: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'UserId is required'],
+      ref: 'User',
+    },
+    BookDetails: {
+      type: [BookDetailsSchema],
+      required: [true, 'BookDetails are required'],
+    },
+    OrderDate: {
+      type: Date,
+      default: Date.now,
+    },
+    PaymentStatus: {
       type: String,
-      required: [true, 'Email is required'], // Custom required message
-      validate: [isEmail, 'Email is not valid'],
-      trim: true, // Trims extra spaces
+      default: 'Unpaid',
+      enum: ['Unpaid', 'Paid'],
     },
-    product: {
+    PaymentMethod: {
       type: String,
-      required: [true, 'Product is required'], // Custom required message
-      trim: true, // Trims extra spaces
+      required: [true, 'PaymentMethod is required'],
+      enum: ['Mobile Banking', 'Cash on Delivery'],
     },
-    quantity: {
-      type: Number,
-      required: [true, 'Quantity must be atleast 1'], // Custom required message
-      trim: true, // Trims extra spaces
+    OrderStatus: {
+      type: String,
+      default: 'Processing',
+      enum: ['Processing', 'Shipped', 'Delivered', 'Cancelled'],
     },
-    totalPrice: {
+    SubTotal: {
       type: Number,
-      required: [true, 'Total price must be atleast 1'], // Custom required message
-      trim: true, // Trims extra spaces
+      required: [true, 'Subtotal is required'],
+      min: 0,
+    },
+    Total: {
+      type: Number,
+      required: [true, 'Total is required'],
+      min: 0,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export const Order = model<IOrder>('Order', OrderSchema);
