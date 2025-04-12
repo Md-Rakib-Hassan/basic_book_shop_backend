@@ -8,7 +8,7 @@ const createAuthorInDB = async (authorData:IAuthor):Promise<IAuthor> => {
 
 const getAllAuthorsFromDB = async (searchTerm?: string) => {
     searchTerm=searchTerm?.startsWith(' ')?searchTerm.replace(' ','+'):searchTerm;
-    console.log(searchTerm);
+   
     const query = searchTerm
         ? {
             $or: [

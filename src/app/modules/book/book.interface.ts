@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { ObjectId, Types } from "mongoose";
+import { Types } from "mongoose";
+import { IReview } from "../review/review.interface";
 
 export enum Category {
   Fiction = 'Fiction',
@@ -21,12 +22,8 @@ export default interface IBook {
   PublishedYear: number;
   Description: string;
   ImageUrl: string;
+  Reviews?: IReview[];
 
 }
 
 
-export interface IBookReview{
-  User: ObjectId;
-  Rating: number;
-  Details?: string;
-}

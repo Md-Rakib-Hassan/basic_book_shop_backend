@@ -4,7 +4,7 @@ import { IReview } from './review.interface';
 
 
 const ReviewSchema = new Schema<IReview>({
-    UserId: { type: String, required: [true, 'UserId is required'] },
+    UserId: { type: String, required: [true, 'UserId is required'], ref:'User' },
     BookId: { type: String, required: [true, 'BookId is required'] },
     ReviewData: {
         Rating: { type: Number, required: [true, 'Rating is required'], min: 1, max: 5 },

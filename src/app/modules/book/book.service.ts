@@ -3,6 +3,8 @@ import { ObjectId } from 'mongoose';
 import IBook from './book.interface';
 import { Book } from './book.model';
 import AppError from '../../errors/AppError';
+import Review from '../review/review.model';
+import { ReviewServices } from '../review/review.service';
 
 // Service to create a book in the database
 const createBookInDB = async (bookData: IBook): Promise<IBook> => {
@@ -16,20 +18,27 @@ const getAllBooksFromDB = async (searchTerm?: string) => {
     ? {
         $or: [
           { Title: searchTerm },
-          { Author: searchTerm },
           { Category: searchTerm },
           { ISBN: searchTerm },
         ],
       }
     : {};
-
-  const result = await Book.find(query).populate('Author');
+  
+    
+    const result = await Book.find(query).populate('Author');
   return result;
 };
 
 // Service to fetch a specific book by ID
-const getSpecificBookFromDB = async (bookId: ObjectId): Promise<IBook | null> => {
+const getSpecificBookFromDB = async (bookId: string): Promise<IBook | null> => {
   const result = await Book.findById(bookId).populate('Author');
+  const bookReviews = await ReviewServices.getReviewsFromDB(bookId);
+  if (result && bookReviews) {
+    const resultObject = result.toObject(); // Convert Mongoose document to plain object
+    resultObject.Reviews = bookReviews; // Add the Reviews property
+    return resultObject; // Return the modified object
+  }
+  
   return result;
 };
 

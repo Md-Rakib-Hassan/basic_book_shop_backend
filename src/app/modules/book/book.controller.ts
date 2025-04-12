@@ -20,6 +20,7 @@ const createBook = catchAsync(async (req: Request, res: Response) => {
 // Retrieves all books, optionally filtered by query parameters
 const getAllBooks = catchAsync(async (req: Request, res: Response) => {
   const { searchTerm } = req.query; // Get query parameters for filtering
+ 
   const result = await BookServices.getAllBooksFromDB(searchTerm as string); // Fetch books from the database
 
   sendResponse(res, {

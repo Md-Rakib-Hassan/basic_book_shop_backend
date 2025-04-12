@@ -25,7 +25,14 @@ const loginUser = async (payload:ILoginUser) => {
         config.jwt_secret as string,
         config.jwt_expiration as string,
     )
-    return accessToken;
+
+    const refreshToken=createToken(
+        jwtPayload,
+        config.jwt_refresh_secret as string,
+        config.jwt_refresh_expiration as string,
+    )
+
+    return {accessToken,refreshToken};
 }
 
 export const AuthServices = {

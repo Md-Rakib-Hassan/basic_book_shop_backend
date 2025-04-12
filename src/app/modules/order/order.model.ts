@@ -39,7 +39,7 @@ const OrderSchema = new Schema<IOrder>(
     },
     PaymentMethod: {
       type: String,
-      required: [true, 'PaymentMethod is required'],
+      required: [true, 'Payment method is required'],
       enum: ['Mobile Banking', 'Cash on Delivery'],
     },
     OrderStatus: {

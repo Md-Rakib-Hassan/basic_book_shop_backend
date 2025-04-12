@@ -4,6 +4,7 @@ import { BookRoutes } from "../modules/book/book.route";
 import { orderRoute } from "../modules/order/order.route";
 import { UserRoutes } from "../modules/user/user.route";
 import { AuthorRoutes } from "../modules/author/author.route";
+import { reviewRoute } from "../modules/review/review.routes";
 
 
 const router = Router();
@@ -28,6 +29,10 @@ const moduleRoutes = [
     {
         path: '/author',
         route:AuthorRoutes,
+    },
+    {
+        path: '/review',
+        route:reviewRoute,
     }
     
 ]
