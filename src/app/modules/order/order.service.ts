@@ -7,6 +7,7 @@ import { Order } from './order.model';
 import { UserService } from '../user/user.service';
 
 const placeOrderInDB = async (orderData: IOrder): Promise<IOrder> => {
+  console.log(orderData);
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
@@ -40,6 +41,11 @@ const placeOrderInDB = async (orderData: IOrder): Promise<IOrder> => {
     throw new AppError(400, err.message);
   }
 };
+
+const getOrderByTranIdFromDB = async (tran_id: string) => { 
+  const result = await Order.findOne({ tran_id }); 
+  return result;
+}
 
 const getAllOrdersFromDB = async (search: any) => {
   const searchCriteria = search
@@ -143,4 +149,5 @@ export const OrderServices = {
   getSpecificOrderFromDB,
   cancelSpecificOrderInDB,
   updateSpecificOrderInDB,
+  getOrderByTranIdFromDB
 };

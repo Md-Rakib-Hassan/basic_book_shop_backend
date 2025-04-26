@@ -3,7 +3,7 @@ import { IUser } from './user.interface';
 import UserModel from './user.model';
 
 const createUserIntoDB = async (userData: IUser) => {
-        const isUserExist = await getSingleUserFromDB(userData.Email);
+        const isUserExist = await getSingleUserFromDBByEmail(userData.Email);
         if (isUserExist) {
             throw new AppError(400, 'User already exists');
         }
@@ -17,7 +17,7 @@ const createUserIntoDB = async (userData: IUser) => {
     
 };
 
-const getSingleUserFromDB = async (Email: string) => {
+const getSingleUserFromDBByEmail = async (Email: string) => {
   const result = await UserModel.findOne({ Email });
   return result;
 };
@@ -30,6 +30,6 @@ const getSingleUserFromDBById = async (id: string) => {
 
 export const UserService = {
   createUserIntoDB,
-  getSingleUserFromDB,
+  getSingleUserFromDBByEmail,
   getSingleUserFromDBById
 };

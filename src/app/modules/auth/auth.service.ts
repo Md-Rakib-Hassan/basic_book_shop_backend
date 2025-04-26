@@ -5,7 +5,7 @@ import { ILoginUser } from "./auth.interface";
 import { createToken } from "./auth.utils";
 
 const loginUser = async (payload:ILoginUser) => { 
-    const user = await UserService.getSingleUserFromDB(payload.Email);
+    const user = await UserService.getSingleUserFromDBByEmail(payload.Email);
     if(!user){
         throw new AppError(404,'User not found');
     }

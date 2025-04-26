@@ -15,7 +15,7 @@ const auth = (...Roles:TUserRole[]) => {
 
         const { Role, Email } = decoded;
 
-        const user = await UserService.getSingleUserFromDB(Email);
+        const user = await UserService.getSingleUserFromDBByEmail(Email);
         if (!user) {
             throw new AppError(404,'User not found');
         }
