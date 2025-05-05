@@ -3,10 +3,7 @@ import { z } from 'zod';
  const CreateBookValidationSchema = z.object({
   Title: z.string({required_error:'Title is required'}).trim(),
   Author: z
-    .string({ required_error: 'Author is required' })
-    .refine((val) => /^[a-f\d]{24}$/i.test(val), {
-      message: 'Invalid Author ID',
-    }),
+    .string({ required_error: 'Author is required' }),
   Price: z
     .number({ required_error: 'Price is required' })
     .nonnegative({ message: 'Price must be a positive number' }),
@@ -37,10 +34,7 @@ import { z } from 'zod';
  const UpdateBookValidationSchema = z.object({
     Title: z.string({required_error:'Title is required'}).trim().optional(),
     Author: z
-      .string({ required_error: 'Author is required' })
-      .refine((val) => /^[a-f\d]{24}$/i.test(val), {
-        message: 'Invalid Author ID',
-      }).optional(),
+      .string({ required_error: 'Author is required' }),
     Price: z
       .number({ required_error: 'Price is required' })
       .nonnegative({ message: 'Price must be a positive number' }).optional(),

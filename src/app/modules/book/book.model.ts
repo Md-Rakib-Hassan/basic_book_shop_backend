@@ -9,8 +9,7 @@ const bookSchema = new Schema<IBook>(
       trim: true, // Trims extra spaces
     },
     Author: {
-      type: Schema.Types.ObjectId,
-      ref: 'Author',
+      type: String,
       required: [true, 'Author is required'], // Custom required message
     },
     Price: {

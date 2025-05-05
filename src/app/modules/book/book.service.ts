@@ -46,13 +46,13 @@ const getAllBooksFromDB = async ({ searchTerm, category, sort }: BookQueryParams
       sortCondition = {}; // No sorting
   }
 
-  const result = await Book.find(query).populate('Author').sort(sortCondition);
+  const result = await Book.find(query).sort(sortCondition);
   return result;
 };
 
 // Service to fetch a specific book by ID
 const getSpecificBookFromDB = async (bookId: string): Promise<IBook | null> => {
-  const result = await Book.findById(bookId).populate('Author');
+  const result = await Book.findById(bookId);
   const bookReviews = await ReviewServices.getReviewsFromDB(bookId);
   if (result && bookReviews) {
     const resultObject = result.toObject(); // Convert Mongoose document to plain object
@@ -69,7 +69,7 @@ const updateSpecificBookInDB = async (
   payload: Partial<IBook>,
 ): Promise<IBook | null> => {
   const filter = { _id: bookId };
-  const result = await Book.findOneAndUpdate(filter, payload, { new: true }).populate('Author');
+  const result = await Book.findOneAndUpdate(filter, payload, { new: true });
   return result;
 };
 

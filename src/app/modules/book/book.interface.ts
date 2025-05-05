@@ -18,7 +18,7 @@ export interface BookQueryParams {
 
 
 export default interface IBook {
-  Author: Types.ObjectId;
+  Author: string;
   Title: string;
   ISBN: string;
   Category: Category;
