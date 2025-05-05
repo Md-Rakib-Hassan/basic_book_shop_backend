@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import AppError from "../../errors/AppError";
 import { IReview } from "./review.interface";
 import { Order } from "../order/order.model";

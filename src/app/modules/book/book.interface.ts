@@ -10,6 +10,11 @@ export enum Category {
   Religious = 'Religious',
 }
 
+export interface BookQueryParams {
+  searchTerm?: string;
+  category?: string;
+  sort?: string;
+}
 
 
 export default interface IBook {

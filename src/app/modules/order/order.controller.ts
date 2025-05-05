@@ -26,6 +26,18 @@ const getAllOrders = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+const getMyOrders = catchAsync(async (req: Request, res: Response) => {
+    const userId = req?.user?._id;
+    console.log(req.user);
+    const result = await OrderServices.getAllOrdersFromDB(userId);
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Orders retrieved successfully',
+        data: result,
+    })
+})
+
 const getSpecificOrder = catchAsync(async (req: Request, res: Response) => {
     const orderId = req.params.orderId;
     const result = await OrderServices.getSpecificOrderFromDB(orderId);
@@ -79,4 +91,5 @@ export const OrderController = {
     getSpecificOrder,
     updateSpecificOrder,
     cancelSpecificOrder,
+    getMyOrders
 }

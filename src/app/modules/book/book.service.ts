@@ -1,31 +1,52 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectId } from 'mongoose';
-import IBook from './book.interface';
+import IBook, { BookQueryParams } from './book.interface';
 import { Book } from './book.model';
 import AppError from '../../errors/AppError';
-import Review from '../review/review.model';
 import { ReviewServices } from '../review/review.service';
 
 // Service to create a book in the database
 const createBookInDB = async (bookData: IBook): Promise<IBook> => {
-  const result = (await Book.create(bookData)).populate('Author');
+  const result = (await Book.create(bookData));
   return result;
 };
 
 // Service to fetch all books with optional query parameters
-const getAllBooksFromDB = async (searchTerm?: string) => {
-  const query = searchTerm
-    ? {
-        $or: [
-          { Title: searchTerm },
-          { Category: searchTerm },
-          { ISBN: searchTerm },
-        ],
-      }
-    : {};
-  
-    
-    const result = await Book.find(query).populate('Author');
+
+const getAllBooksFromDB = async ({ searchTerm, category, sort }: BookQueryParams) => {
+  const query: any = {};
+
+  if (searchTerm) {
+    query.$or = [
+      { Title: { $regex: searchTerm, $options: 'i' } },
+      { ISBN: { $regex: searchTerm, $options: 'i' } },
+    ];
+  }
+
+  if (category) {
+    query.Category = { $regex: category, $options: 'i' }; // support partial & case-insensitive
+  }
+
+  // Sorting logic
+  let sortCondition: any = {};
+  switch (sort) {
+    case 'priceLowHigh':
+      sortCondition = { Price: 1 };
+      break;
+    case 'priceHighLow':
+      sortCondition = { Price: -1 };
+      break;
+    case 'rating':
+      sortCondition = { Rating: -1 };
+      break;
+    case 'latest':
+      sortCondition = { createdAt: -1 };
+      break;
+    default:
+      sortCondition = {}; // No sorting
+  }
+
+  const result = await Book.find(query).populate('Author').sort(sortCondition);
   return result;
 };
 

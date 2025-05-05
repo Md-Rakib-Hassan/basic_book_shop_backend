@@ -1,12 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { Request, Response } from 'express';
 import crypto from 'crypto';
 import SSLCommerzPayment from 'sslcommerz-lts';
-import config from '../../config'; // তোমার config/index.ts থেকে ইনপোর্ট হবে
+import config from '../../config'; 
 import { OrderServices } from '../order/order.service';
 
-export const initiatePayment = async (req: Request, res: Response) => {
+ const initiatePayment = async (req: Request, res: Response) => {
   try {
       const { CustomerDetails, BookDetails } = req.body;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const {Name, Address, City, State, ZIPCode, Country, Phone } = CustomerDetails;
       const tran_id = crypto.randomBytes(8).toString('hex').toUpperCase();
       const OrderedBook = req.body;
@@ -20,11 +22,12 @@ export const initiatePayment = async (req: Request, res: Response) => {
       total_amount: totalAmount, 
       currency: 'BDT', 
       tran_id,
-      success_url: `http://localhost:5000/api/payment/success/${tran_id}`,
-      fail_url: `http://localhost:5000/api/payment/fail/${tran_id}`,
-      cancel_url: `http://localhost:5000/api/payment/cancel`,
-      ipn_url: `http://localhost:5000/api/payment/ipn`,
+      success_url: `${config.base_url}/payment/success/${tran_id}`,
+      fail_url: `${config.base_url}/payment/fail/${tran_id}`,
+      cancel_url: `${config.base_url}/payment/cancel`,
+      ipn_url: `${config.base_url}/payment/ipn`,
       shipping_method: 'Courier',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       product_name: BookDetails.map((p: any) => p.BookId).join(', '),
       product_category: 'Books',
       product_profile: 'general',
@@ -89,7 +92,7 @@ export const paymentSuccess = async (req: Request, res: Response) => {
     }
 };
 
-export const paymentFail = async (req: Request, res: Response) => {
+ const paymentFail = async (req: Request, res: Response) => {
 
     try {
         const { tran_id } = req.params;
@@ -118,3 +121,10 @@ export const paymentFail = async (req: Request, res: Response) => {
 };
 
 
+export const PaymentController = {
+
+    initiatePayment,
+    paymentSuccess,
+    paymentFail,
+ 
+}

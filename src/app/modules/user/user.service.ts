@@ -27,9 +27,26 @@ const getSingleUserFromDBById = async (id: string) => {
   return result;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getAllUsersFromDB = async (search: any) => {
+  const searchCriteria = search
+    ? {
+        $and: [
+          { Name: search.Name },
+          { Email: search.Email },
+          { Phone: search.Phone },
+          { UserType: search.UserType },
+        ].filter((criteria) => Object.values(criteria)[0] !== undefined),
+      }
+    : {};
+  const result = await UserModel.find(searchCriteria);
+  return result;
+};
+
 
 export const UserService = {
   createUserIntoDB,
   getSingleUserFromDBByEmail,
-  getSingleUserFromDBById
+  getSingleUserFromDBById,
+  getAllUsersFromDB
 };

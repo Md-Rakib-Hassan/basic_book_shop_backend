@@ -19,16 +19,20 @@ const createBook = catchAsync(async (req: Request, res: Response) => {
 
 // Retrieves all books, optionally filtered by query parameters
 const getAllBooks = catchAsync(async (req: Request, res: Response) => {
-  const { searchTerm } = req.query; // Get query parameters for filtering
- 
-  const result = await BookServices.getAllBooksFromDB(searchTerm as string); // Fetch books from the database
+  const { searchTerm, category, sort } = req.query;
+
+  const result = await BookServices.getAllBooksFromDB({
+    searchTerm: searchTerm as string,
+    category: category as string,
+    sort: sort as string,
+  });
 
   sendResponse(res, {
     statusCode: 200,
     success: true,
     message: 'Books retrieved successfully',
     data: result,
-  })
+  });
 });
 
 // Retrieves a single book by its ID

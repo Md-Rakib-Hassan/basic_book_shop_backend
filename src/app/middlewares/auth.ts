@@ -5,7 +5,8 @@ import config from "../config";
 import { UserService } from "../modules/user/user.service";
 import { TUserRole } from "../modules/user/user.interface";
 
-const auth = (...Roles:TUserRole[]) => {
+const auth = (...Roles: TUserRole[]) => {
+    
     return catchAsync(async(req, res, next) => {
         const token = (req.headers.authorization)?.replace('Bearer ', '');
         if (!token) {

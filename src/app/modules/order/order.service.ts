@@ -47,6 +47,13 @@ const getOrderByTranIdFromDB = async (tran_id: string) => {
   return result;
 }
 
+const getMyOrdersFromDB = async (userId: string) => { 
+  const result = await Order.find({ UserId: userId })
+    .populate('BookDetails.BookId')
+    .populate('UserId');
+  return result;
+}
+
 const getAllOrdersFromDB = async (search: any) => {
   const searchCriteria = search
     ? {
@@ -149,5 +156,6 @@ export const OrderServices = {
   getSpecificOrderFromDB,
   cancelSpecificOrderInDB,
   updateSpecificOrderInDB,
-  getOrderByTranIdFromDB
+  getOrderByTranIdFromDB,
+  getMyOrdersFromDB
 };
