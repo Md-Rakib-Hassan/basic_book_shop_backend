@@ -38,8 +38,20 @@ const getSingleUserByEmail = catchAsync(async (req, res) => {
         })
     }, 400);
 
+const blockUser = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await UserService.blockUserFromDB(id);
+    sendResponse(res, {
+        success: true,
+        message: 'User blocked successfully',
+        statusCode: 200,
+        data: result
+    })
+});
+
 export const UserController = {
     createUser,
     getSingleUserByEmail,
-    getAllUsers
+    getAllUsers,
+    blockUser
 }

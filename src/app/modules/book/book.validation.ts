@@ -34,7 +34,7 @@ import { z } from 'zod';
  const UpdateBookValidationSchema = z.object({
     Title: z.string({required_error:'Title is required'}).trim().optional(),
     Author: z
-      .string({ required_error: 'Author is required' }),
+      .string({ required_error: 'Author is required' }).optional(),
     Price: z
       .number({ required_error: 'Price is required' })
       .nonnegative({ message: 'Price must be a positive number' }).optional(),

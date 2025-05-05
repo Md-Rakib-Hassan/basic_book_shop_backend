@@ -43,10 +43,20 @@ const getAllUsersFromDB = async (search: any) => {
   return result;
 };
 
+const blockUserFromDB = async (id: string) => { 
+  const result = await UserModel.findByIdAndUpdate(
+    id,
+    { isBlocked: true },
+    { new: true }
+  );
+  return result;
+}
+
 
 export const UserService = {
   createUserIntoDB,
   getSingleUserFromDBByEmail,
   getSingleUserFromDBById,
-  getAllUsersFromDB
+  getAllUsersFromDB,
+  blockUserFromDB
 };

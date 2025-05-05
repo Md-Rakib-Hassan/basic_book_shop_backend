@@ -69,6 +69,7 @@ const updateSpecificBookInDB = async (
   payload: Partial<IBook>,
 ): Promise<IBook | null> => {
   const filter = { _id: bookId };
+  console.log(payload);
   const result = await Book.findOneAndUpdate(filter, payload, { new: true });
   return result;
 };
