@@ -49,9 +49,21 @@ const blockUser = catchAsync(async (req, res) => {
     })
 });
 
+const unblockUser = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await UserService.unblockUserFromDB(id);
+    sendResponse(res, {
+        success: true,
+        message: 'User unblocked successfully',
+        statusCode: 200,
+        data: result
+    })
+});
+
 export const UserController = {
     createUser,
     getSingleUserByEmail,
     getAllUsers,
-    blockUser
+    blockUser,
+    unblockUser
 }

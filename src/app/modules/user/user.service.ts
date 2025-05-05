@@ -52,11 +52,21 @@ const blockUserFromDB = async (id: string) => {
   return result;
 }
 
+const unblockUserFromDB = async (id: string) => { 
+  const result = await UserModel.findByIdAndUpdate(
+    id,
+    { isBlocked: false },
+    { new: true }
+  );
+  return result;
+}
+
 
 export const UserService = {
   createUserIntoDB,
   getSingleUserFromDBByEmail,
   getSingleUserFromDBById,
   getAllUsersFromDB,
-  blockUserFromDB
+  blockUserFromDB,
+  unblockUserFromDB
 };

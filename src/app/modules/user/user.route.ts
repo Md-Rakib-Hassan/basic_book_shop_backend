@@ -8,5 +8,6 @@ const router = express.Router();
 router.get('/single/:email', UserController.getSingleUserByEmail);
 router.get('/', auth('admin'), UserController.getAllUsers);
 router.patch('/block/:id',auth('admin'), UserController.blockUser);
+router.patch('/unblock/:id',auth('admin'), UserController.unblockUser);
 
 export const UserRoutes = router;
