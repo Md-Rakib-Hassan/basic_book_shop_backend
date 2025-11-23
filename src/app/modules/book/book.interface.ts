@@ -1,13 +1,30 @@
 /* eslint-disable no-unused-vars */
 import { Types } from "mongoose";
-import { IReview } from "../review/review.interface";
 
 export enum Category {
   Fiction = 'Fiction',
+  NonFiction = 'Non-Fiction',
   Science = 'Science',
-  SelfDevelopment = 'SelfDevelopment',
+  SelfHelp = 'Self-Help',
+  Biography = 'Biography',
+  History = 'History',
+  Romance = 'Romance',
+  Mystery = 'Mystery',
+  Academic = 'Academic',
+  Fantasy = 'Fantasy',
+  Horror = 'Horror',
+  ScienceFiction = 'Science Fiction',
+  Thriller = 'Thriller',
+  Childrens = "Children's",
+  YoungAdult = 'Young Adult',
+  Comics = 'Comics',
+  GraphicNovel = 'Graphic Novel',
   Poetry = 'Poetry',
-  Religious = 'Religious',
+  ReligionSpirituality = 'Religion & Spirituality',
+  Travel = 'Travel',
+  HealthWellness = 'Health & Wellness',
+  Cooking = 'Cooking',
+  Others = 'Others',
 }
 
 export interface BookQueryParams {
@@ -18,16 +35,26 @@ export interface BookQueryParams {
 
 
 export default interface IBook {
-  Author: string;
   Title: string;
   ISBN: string;
+  Author: string;
   Category: Category;
   Price: number;
-  StockQuantity: number;
+  ActualPrice: number;
+  PickupPoint: Types.ObjectId;
+  BookOwner: Types.ObjectId;
+  RequireDeposit: boolean;
   PublishedYear: number;
   Description: string;
   ImageUrl: string;
-  Reviews?: IReview[];
+  Condition: string;
+  Availability: string;
+  AdminApproved?: boolean;
+  Rating?: number;
+  Semester?: string;
+  Subject?: string;
+  Institution?: string;
+  IsAvailable?: boolean;
 
 }
 

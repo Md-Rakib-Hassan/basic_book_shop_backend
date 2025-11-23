@@ -9,6 +9,7 @@ export interface IUser {
   Phone: string;
   UserType: 'admin' | 'user';
   isBlocked: boolean;
+  CurrentBalance: number;
 }
 
 export type TUserRole = keyof typeof USER_ROLE;

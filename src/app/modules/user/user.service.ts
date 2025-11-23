@@ -22,6 +22,11 @@ const getSingleUserFromDBByEmail = async (Email: string) => {
   return result;
 };
 
+const getSingleUserFromDBByID = async (id: string) => {
+  const result = await UserModel.findById(id);
+  return result;
+};
+
 const getSingleUserFromDBById = async (id: string) => {
   const result = await UserModel.findById(id);
   return result;
@@ -61,6 +66,29 @@ const unblockUserFromDB = async (id: string) => {
   return result;
 }
 
+const currentBalanceUpdateFromDB = async (
+  id: string,
+  amount: number,
+  session?: any
+) => {
+  const user = await UserModel.findById(id).session(session);
+  if (!user) {
+    throw new AppError(404, "User not found");
+  }
+
+  // Update balance
+  user.CurrentBalance += amount;
+
+  // Ensure balance doesn’t go negative
+  if (user.CurrentBalance < 0) {
+    throw new AppError(400, "Insufficient balance");
+  }
+
+  await user.save({ session });
+  return user;
+};
+
+
 
 export const UserService = {
   createUserIntoDB,
@@ -68,5 +96,7 @@ export const UserService = {
   getSingleUserFromDBById,
   getAllUsersFromDB,
   blockUserFromDB,
-  unblockUserFromDB
+  unblockUserFromDB,
+  currentBalanceUpdateFromDB,
+  getSingleUserFromDBByID,
 };

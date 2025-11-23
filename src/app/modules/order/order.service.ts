@@ -7,7 +7,7 @@ import { Order } from './order.model';
 import { UserService } from '../user/user.service';
 
 const placeOrderInDB = async (orderData: IOrder): Promise<IOrder> => {
-  console.log(orderData);
+  // console.log(orderData);
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
@@ -67,7 +67,7 @@ const getAllOrdersFromDB = async (search: any) => {
       }
     : {};
 
-  const result = await Order.find(searchCriteria)
+  const result = await Order.find(searchCriteria).sort({OrderDate: -1 })
     .populate('BookDetails.BookId')
     .populate('UserId');
   return result;

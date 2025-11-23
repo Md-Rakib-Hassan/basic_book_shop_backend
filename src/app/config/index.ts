@@ -13,4 +13,6 @@ export default {
   ssl_store_id: process.env.SSL_STORE_ID,
   ssl_store_passwd: process.env.SSL_STORE_PASSWORD,
   base_url: process.env.BASE_URL,
+  frontend_base_url: process.env.FRONTEND_BASE_URL,
+  gemini_api_key: process.env.GEMINI_API_KEY,
 };

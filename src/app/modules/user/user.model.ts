@@ -14,6 +14,7 @@ const userSchema = new Schema<IUser>(
     Address: { type: String,required: true },
     Phone: { type: String, required: true,unique: true},
     isBlocked: { type: Boolean, default: false },
+    CurrentBalance: { type: Number, default: 0 },
   },
   {
     timestamps: true,

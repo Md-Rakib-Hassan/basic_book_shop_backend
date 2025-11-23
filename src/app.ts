@@ -12,15 +12,18 @@ app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (like server-to-server requests from SSLCommerz)
+      console.log('CORS Origin Rakib:', origin);
       if (!origin) return callback(null, true);
       if (
-        ['http://localhost:5173', 'https://lambent-sable-a3fd17.netlify.app'].includes(origin)
+        ['http://localhost:5173', 'https://lambent-sable-a3fd17.netlify.app','https://sandbox.sslcommerz.com/','http://localhost:5000/'].includes(origin)
       ) {
         return callback(null, true);
       }
-      return callback(new Error('Not allowed by CORS'));
+      return callback(null, true);
+      // return callback(new Error('Not allowed by CORS Rakib'));
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'],
   })
 );
 

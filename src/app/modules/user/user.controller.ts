@@ -28,6 +28,21 @@ const getSingleUserByEmail = catchAsync(async (req, res) => {
 }
     , 400);
 
+
+    const getSingleUserByID = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await UserService.getSingleUserFromDBByID(id);
+   
+    sendResponse(res, {
+        success: true,
+        message: 'User found successfully',
+        statusCode: 200,
+        data: result
+    })
+    
+}
+    , 400);
+
     const getAllUsers= catchAsync(async (req, res) => {
         const result = await UserService.getAllUsersFromDB(req.query);
         sendResponse(res, {
@@ -65,5 +80,6 @@ export const UserController = {
     getSingleUserByEmail,
     getAllUsers,
     blockUser,
-    unblockUser
+    unblockUser,
+    getSingleUserByID
 }

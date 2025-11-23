@@ -1,62 +1,96 @@
 import { model, Schema } from 'mongoose';
-import IBook from './book.interface';
+import IBook, { Category } from './book.interface';
 
 const bookSchema = new Schema<IBook>(
   {
     Title: {
       type: String,
-      required: [true, 'Title is required'], // Custom required message
-      trim: true, // Trims extra spaces
-    },
-    Author: {
-      type: String,
-      required: [true, 'Author is required'], // Custom required message
-    },
-    Price: {
-      type: Number,
-      required: [true, 'Price is required'], // Custom required message
-      min: [0, 'Price must be a positive number'], // Custom min value message
-    },
-    Category: {
-      type: String,
-      enum: {
-        values: [
-          'Fiction',
-          'Science',
-          'SelfDevelopment',
-          'Poetry',
-          'Religious',
-        ],
-        message: '{VALUE} is not a valid category.', // Custom enum message
-      },
-      required: [true, 'Category is required'], // Custom required message
+      required: [true, 'Title is required'],
       trim: true,
-    },
-    Description: {
-      type: String,
-      required: [true, 'Description is required'], // Custom required message
-      minlength: [10, 'Description must be at least 10 characters long'], // Minimum length validation
-    },
-    StockQuantity: {
-      type: Number,
-      required: [true, 'Quantity is required'], // Custom required message
-      min: [1, 'Quantity must be at least 1'], // Custom min value message
     },
     ISBN: {
       type: String,
-      required: [true, 'ISBN is required'], // Custom required message
+      required: [true, 'ISBN is required'],
       trim: true,
-      unique: true,
     },
-    
-      PublishedYear: {
-        type: Number,
-        required: [true, 'PublishedYear is required'], // Custom required message
+    Author: {
+      type: String,
+      required: [true, 'Author is required'],
+      trim: true,
+    },
+    Category: {
+      type: String,
+      enum: Object.values(Category),
+      required: [true, 'Category is required'],
+      trim: true,
+    },
+    Price: {
+      type: Number,
+      required: [true, 'Price is required'],
+      min: [0, 'Price must be a positive number'],
+    },
+    PickupPoint: {
+      type: Schema.Types.ObjectId,
+      ref: 'PickupPoint',
+      required: [true, 'PickUpPoint is required'],
+    },
+    BookOwner: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'Book owner is required'],
+    },
+   
+    PublishedYear: {
+      type: Number,
+      required: [true, 'PublishedYear is required'],
+    },
+    Description: {
+      type: String,
+      required: [true, 'Description is required'],
+      minlength: [10, 'Description must be at least 10 characters long'],
     },
     ImageUrl: {
       type: String,
-      required: [true, 'Image URL is required'], // Custom required message
+      required: [true, 'Image URL is required'],
     },
+    Condition: {
+      type: String,
+      required: [true, 'Book Condition is required'],
+    },
+    Availability: {
+      type: String,
+      required: [true, 'Book availablity is required'],
+    },
+    IsAvailable: {
+      type: Boolean,
+      default:true,
+    },
+    AdminApproved: {
+      type: Boolean,
+      default: false,
+    },
+    Rating: { type: Number },
+    ActualPrice: {
+      type: Number,
+      min: [0, 'Actual Price must be a positive number'],
+    },
+    RequireDeposit: {
+      type: Boolean,
+      default: false,
+    },
+    Semester: {
+      type: String,
+      trim: true,
+    },
+    Subject: {
+      type: String,
+      trim: true,
+    },
+    Institution: {
+      type: String,
+      trim: true,
+    },
+    
   },
   { timestamps: true },
 );
